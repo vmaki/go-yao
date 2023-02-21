@@ -8,6 +8,12 @@ import (
 func RegisterAPIRoutes(r *gin.Engine) {
 	v1 := r.Group("/v1")
 	{
+		authGroup := v1.Group("/auth")
+		{
+			ac := new(v1C.AuthController)
+
+			authGroup.POST("/login", ac.Login)
+		}
 
 		testGroup := v1.Group("/test")
 		{

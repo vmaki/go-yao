@@ -33,25 +33,9 @@ func Error(ctx *gin.Context, msg ...string) {
 }
 
 // BadRequest 在解析用户请求，请求的格式或者方法不符合预期时调用
-func BadRequest(ctx *gin.Context, err error, msg ...string) {
+func BadRequest(ctx *gin.Context, msg ...string) {
 	ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
 		"code": 400,
-		"msg":  defaultMessage("请求解析错误，请确认请求格式是否正确。上传文件请使用 multipart 标头，参数请使用 JSON 格式。", msg...),
-	})
-}
-
-// ValidationError 处理表单验证不通过的错误
-func ValidationError(ctx *gin.Context, errors map[string][]string) {
-	ctx.AbortWithStatusJSON(http.StatusUnprocessableEntity, gin.H{
-		"code": 422,
-		"msg":  "请求验证不通过",
-	})
-}
-
-// Unauthorized 未传参 msg 时使用默认消息
-func Unauthorized(ctx *gin.Context, msg ...string) {
-	ctx.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{
-		"code": 401,
 		"msg":  defaultMessage("请求解析错误，请确认请求格式是否正确。上传文件请使用 multipart 标头，参数请使用 JSON 格式。", msg...),
 	})
 }
@@ -60,6 +44,14 @@ func Abort404(ctx *gin.Context, msg ...string) {
 	ctx.AbortWithStatusJSON(http.StatusNotFound, gin.H{
 		"code":    404,
 		"message": defaultMessage("路由未定义，请确认 url 和请求方法是否正确", msg...),
+	})
+}
+
+// ValidationError 处理表单验证不通过的错误
+func ValidationError(ctx *gin.Context, msg ...string) {
+	ctx.AbortWithStatusJSON(http.StatusUnprocessableEntity, gin.H{
+		"code": 422,
+		"msg":  defaultMessage("请求参数有误", msg...),
 	})
 }
 
