@@ -13,9 +13,12 @@ func init() {
 	flag.Parse()
 
 	boot.SetupConfig(global.Env)
+	boot.SetupLogger()
 }
 
 func main() {
+	gin.SetMode(gin.ReleaseMode)
+
 	r := gin.New()
 	boot.SetupRoute(r)
 

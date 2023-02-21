@@ -4,3 +4,11 @@ application:
   port: 7001
   debug: true
   timezone: Asia/Shanghai
+log:
+  level: debug
+  type: single
+  filename: storage/logs/logs.log
+  max_size: 64
+  max_age: 7
+  max_backup: 5
+  compress: false

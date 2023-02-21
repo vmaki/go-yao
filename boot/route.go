@@ -2,6 +2,7 @@ package boot
 
 import (
 	"github.com/gin-gonic/gin"
+	"go-yao/app/http/middlewares"
 	"go-yao/routes"
 	"net/http"
 	"strings"
@@ -17,7 +18,7 @@ func SetupRoute(r *gin.Engine) {
 
 // registerGlobalMiddleware 注册全局中间件
 func registerGlobalMiddleware(r *gin.Engine) {
-	r.Use(gin.Logger(), gin.Recovery())
+	r.Use(middlewares.Logger(), gin.Recovery())
 }
 
 // notFoundHandle 处理404请求
