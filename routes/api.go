@@ -2,21 +2,19 @@ package routes
 
 import (
 	"github.com/gin-gonic/gin"
-	"go-yao/pkg/global"
-	"net/http"
+	v1C "go-yao/app/http/controllers/api/v1"
 )
 
 func RegisterAPIRoutes(r *gin.Engine) {
 	v1 := r.Group("/v1")
 	{
-		v1.GET("/", func(ctx *gin.Context) {
-			ctx.JSON(http.StatusOK, gin.H{
-				"msg": "Hello " + global.Conf.Application.Name,
-			})
-		})
 
-		v1.GET("/500", func(ctx *gin.Context) {
-			panic("这是 panic 测试")
-		})
+		testGroup := v1.Group("/test")
+		{
+			tc := new(v1C.TestController)
+
+			testGroup.GET("/", tc.Hello)
+			testGroup.GET("/500", tc.Err)
+		}
 	}
 }

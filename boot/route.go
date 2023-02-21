@@ -3,6 +3,7 @@ package boot
 import (
 	"github.com/gin-gonic/gin"
 	"go-yao/app/http/middlewares"
+	"go-yao/pkg/response"
 	"go-yao/routes"
 	"net/http"
 	"strings"
@@ -28,10 +29,7 @@ func notFoundHandle(r *gin.Engine) {
 		if strings.Contains(accept, "text/html") {
 			ctx.String(http.StatusNotFound, "页面返回 404")
 		} else {
-			ctx.JSON(http.StatusNotFound, gin.H{
-				"code": 404,
-				"msg":  "路由未定义，请确认 url 和请求方法是否正确",
-			})
+			response.Abort404(ctx)
 		}
 	})
 }

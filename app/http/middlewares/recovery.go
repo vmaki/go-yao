@@ -3,9 +3,9 @@ package middlewares
 import (
 	"github.com/gin-gonic/gin"
 	"go-yao/pkg/logger"
+	"go-yao/pkg/response"
 	"go.uber.org/zap"
 	"net"
-	"net/http"
 	"net/http/httputil"
 	"os"
 	"strings"
@@ -48,10 +48,7 @@ func Recovery() gin.HandlerFunc {
 				logFields = append(logFields, zap.Stack("stacktrace"))
 				logger.Error("recovery from panic", logFields...)
 
-				ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{
-					"code": 500,
-					"msg":  "服务器内部错误，请稍后再试",
-				})
+				response.Error(ctx)
 			}
 		}()
 
