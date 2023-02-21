@@ -1,0 +1,6 @@
+application:
+  name: go-yao
+  mode: local
+  port: 7001
+  debug: true
+  timezone: Asia/Shanghai
