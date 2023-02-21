@@ -14,5 +14,9 @@ func RegisterAPIRoutes(r *gin.Engine) {
 				"msg": "Hello " + global.Conf.Application.Name,
 			})
 		})
+
+		v1.GET("/500", func(ctx *gin.Context) {
+			panic("这是 panic 测试")
+		})
 	}
 }

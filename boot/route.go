@@ -18,7 +18,7 @@ func SetupRoute(r *gin.Engine) {
 
 // registerGlobalMiddleware 注册全局中间件
 func registerGlobalMiddleware(r *gin.Engine) {
-	r.Use(middlewares.Logger(), gin.Recovery())
+	r.Use(middlewares.Logger(), middlewares.Recovery())
 }
 
 // notFoundHandle 处理404请求
@@ -30,7 +30,7 @@ func notFoundHandle(r *gin.Engine) {
 		} else {
 			ctx.JSON(http.StatusNotFound, gin.H{
 				"code": 404,
-				"msg":  "路由未定义，请确认 url 和请求方法是否正确。",
+				"msg":  "路由未定义，请确认 url 和请求方法是否正确",
 			})
 		}
 	})
