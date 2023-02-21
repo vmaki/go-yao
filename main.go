@@ -2,17 +2,16 @@ package main
 
 import (
 	"github.com/gin-gonic/gin"
-	"net/http"
+	"go-yao/boot"
 )
 
 func main() {
 	r := gin.Default()
 
-	r.GET("/", func(ctx *gin.Context) {
-		ctx.JSON(http.StatusOK, gin.H{
-			"msg": "Hello World",
-		})
-	})
+	boot.SetupRoute(r)
 
-	r.Run()
+	err := r.Run(":7001")
+	if err != nil {
+		panic("启动失败, err: " + err.Error())
+	}
 }
