@@ -8,7 +8,19 @@ log:
   level: debug
   type: single
   filename: storage/logs/logs.log
-  max_size: 64
-  max_age: 7
-  max_backup: 5
+  maxSize: 64
+  maxAge: 7
+  maxBackup: 5
   compress: false
+database:
+  driver: mysql
+  host: 127.0.0.1
+  port: 3306
+  database: go-yao
+  username: root
+  password: root
+  charset: utf8mb4
+  maxOpenConnections: 100
+  maxIdleConnections: 25
+  maxLifeSeconds: 300
+
