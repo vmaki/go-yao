@@ -32,13 +32,11 @@ func (c *AuthController) Register(ctx *gin.Context) {
 		return
 	}
 
-	if isExist := services.IsPhoneExist(req.Phone); isExist {
-		response.BadRequest(ctx, "该手机号码已经注册")
+	us := new(services.UserService)
+	data, err := us.Register(req.Phone)
+	if err != nil {
+		response.BadRequest(ctx, err.Error())
 		return
-	}
-
-	data := &dto.AuthRegisterResp{
-		Token: req.Phone + "-" + req.Code,
 	}
 
 	response.Data(ctx, data)
