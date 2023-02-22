@@ -53,3 +53,17 @@ func (c *AuthController) Register(ctx *gin.Context) {
 
 	response.Success(ctx)
 }
+
+func (c *AuthController) RefreshToken(ctx *gin.Context) {
+	token, err := jwt.NewJWT().RefreshToken(ctx)
+	if err != nil {
+		response.BadRequest(ctx, err.Error())
+		return
+	}
+
+	data := &dto.AuthLoginResp{
+		Token: token,
+	}
+
+	response.Data(ctx, data)
+}

@@ -14,6 +14,7 @@ func RegisterAPIRoutes(r *gin.Engine) {
 
 			authGroup.POST("/login", ac.Login)
 			authGroup.POST("/register", ac.Register)
+			authGroup.POST("/refresh-token", ac.RefreshToken)
 		}
 
 		commonGroup := v1.Group("/common")
