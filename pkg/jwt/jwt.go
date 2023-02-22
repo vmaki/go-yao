@@ -33,15 +33,77 @@ type UserInfo struct {
 // CustomJWTClaims 自定义Payload信息
 type CustomJWTClaims struct {
 	UserInfo
-	ExpireAtTime int64 `json:"expire_time"` // 过期时间
+	ExpireAtTime int64
 	jwtMod.RegisteredClaims
 }
 
 func NewJWT() *JWT {
 	return &JWT{
 		SignKey:    []byte(global.Conf.JWT.Secret),
-		MaxRefresh: time.Duration(global.Conf.JWT.MaxRefreshTime) * time.Minute,
+		MaxRefresh: time.Duration(global.Conf.JWT.MaxRefreshTime) * time.Second,
 	}
+}
+
+// token过期时间
+func (j *JWT) expireAtTime() time.Time {
+	timezone := helpers.TimenowInTimezone()
+	expireTime := global.Conf.JWT.ExpireTime
+
+	return timezone.Add(time.Duration(expireTime) * time.Second)
+}
+
+// IssueToken 生成 Token，在登录成功时调用
+func (j *JWT) IssueToken(info UserInfo) string {
+	expireTime := j.expireAtTime()
+	claims := CustomJWTClaims{
+		UserInfo: UserInfo{
+			UserID: info.UserID,
+		},
+		ExpireAtTime: expireTime.Unix(),
+		RegisteredClaims: jwtMod.RegisteredClaims{
+			NotBefore: jwtMod.NewNumericDate(helpers.TimenowInTimezone()), // 签名生效时间
+			IssuedAt:  jwtMod.NewNumericDate(helpers.TimenowInTimezone()), // 首次签名时间（后续刷新 Token 不会更新）
+			ExpiresAt: jwtMod.NewNumericDate(expireTime),                  // 签名过期时间
+			Issuer:    global.Conf.Application.Name,                       // 签名颁发者
+		},
+	}
+
+	// 根据 claims 生成token对象
+	token, err := j.createToken(claims)
+	if err != nil {
+		logger.LogIf(err)
+		return ""
+	}
+
+	return token
+}
+
+// createToken 创建 Token，内部使用，外部请调用 IssueToken
+func (j *JWT) createToken(claims CustomJWTClaims) (string, error) {
+	// 使用HS256算法进行token生成
+	t := jwtMod.NewWithClaims(jwtMod.SigningMethodHS256, claims)
+	return t.SignedString(j.SignKey)
+}
+
+func (j *JWT) getTokenFromHeader(ctx *gin.Context) (string, error) {
+	authHeader := ctx.Request.Header.Get("Authorization")
+	if authHeader == "" {
+		return "", ErrHeaderEmpty
+	}
+
+	parts := strings.SplitN(authHeader, " ", 2)
+	if len(parts) != 2 || parts[0] != "Bearer" {
+		return "", ErrHeaderMalformed
+	}
+
+	return parts[1], nil
+}
+
+// parseTokenString 解析token
+func (j *JWT) parseTokenString(token string) (*jwtMod.Token, error) {
+	return jwtMod.ParseWithClaims(token, &CustomJWTClaims{}, func(token *jwtMod.Token) (interface{}, error) {
+		return j.SignKey, nil
+	})
 }
 
 // ParserToken 解析 Token，中间件中调用
@@ -106,71 +168,4 @@ func (j *JWT) RefreshToken(ctx *gin.Context) (string, error) {
 	}
 
 	return "", ErrTokenExpiredMaxRefresh
-}
-
-// IssueToken 生成  Token，在登录成功时调用
-func (j *JWT) IssueToken(info UserInfo) string {
-	// 构造自定义Payload信息
-	expireTime := j.expireAtTime()
-	claims := CustomJWTClaims{
-		// 用户信息
-		UserInfo: UserInfo{
-			UserID: info.UserID,
-		},
-
-		// 过期时间
-		ExpireAtTime: expireTime.Unix(),
-		RegisteredClaims: jwtMod.RegisteredClaims{
-			NotBefore: jwtMod.NewNumericDate(helpers.TimenowInTimezone()), // 签名生效时间
-			IssuedAt:  jwtMod.NewNumericDate(helpers.TimenowInTimezone()), // 首次签名时间（后续刷新 Token 不会更新）
-			ExpiresAt: jwtMod.NewNumericDate(expireTime),                  // 签名过期时间
-			Issuer:    global.Conf.Application.Name,                       // 签名颁发者
-		},
-	}
-
-	// 根据 claims 生成token对象
-	token, err := j.createToken(claims)
-	if err != nil {
-		logger.LogIf(err)
-		return ""
-	}
-
-	return token
-}
-
-// createToken 创建 Token，内部使用，外部请调用 IssueToken
-func (j *JWT) createToken(claims CustomJWTClaims) (string, error) {
-	// 使用HS256算法进行token生成
-	t := jwtMod.NewWithClaims(jwtMod.SigningMethodHS256, claims)
-	return t.SignedString(j.SignKey)
-}
-
-// token过期时间
-func (j *JWT) expireAtTime() time.Time {
-	timezone := helpers.TimenowInTimezone()
-	expireTime := global.Conf.JWT.ExpireTime
-
-	expire := time.Duration(expireTime) * time.Minute
-	return timezone.Add(expire)
-}
-
-func (j *JWT) getTokenFromHeader(ctx *gin.Context) (string, error) {
-	authHeader := ctx.Request.Header.Get("Authorization")
-	if authHeader == "" {
-		return "", ErrHeaderEmpty
-	}
-
-	parts := strings.SplitN(authHeader, " ", 2)
-	if len(parts) != 2 || parts[0] != "Bearer" {
-		return "", ErrHeaderMalformed
-	}
-
-	return parts[1], nil
-}
-
-// parseTokenString 解析token
-func (j *JWT) parseTokenString(token string) (*jwtMod.Token, error) {
-	return jwtMod.ParseWithClaims(token, &CustomJWTClaims{}, func(token *jwtMod.Token) (interface{}, error) {
-		return j.SignKey, nil
-	})
 }

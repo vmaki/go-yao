@@ -3,6 +3,7 @@ package routes
 import (
 	"github.com/gin-gonic/gin"
 	v1C "go-yao/app/http/controllers/api/v1"
+	"go-yao/app/middlewares"
 )
 
 func RegisterAPIRoutes(r *gin.Engine) {
@@ -31,6 +32,7 @@ func RegisterAPIRoutes(r *gin.Engine) {
 			testGroup.GET("/", tc.Hello)
 			testGroup.GET("/500", tc.Err)
 			testGroup.GET("/redis", tc.Redis)
+			testGroup.GET("/is-auth", middlewares.AuthJWT(), tc.Auth)
 		}
 	}
 }
