@@ -5,6 +5,7 @@ import (
 	"go-yao/app/http/controllers/api"
 	"go-yao/app/http/dto"
 	"go-yao/app/services"
+	"go-yao/pkg/jwt"
 	"go-yao/pkg/request"
 	"go-yao/pkg/response"
 )
@@ -19,8 +20,19 @@ func (c *AuthController) Login(ctx *gin.Context) {
 		return
 	}
 
+	us := new(services.UserService)
+	user, err := us.LoginByPhone(req.Phone)
+	if err != nil {
+		response.Error(ctx, err.Error())
+		return
+	}
+
+	token := jwt.NewJWT().IssueToken(jwt.UserInfo{
+		UserID: user.ID,
+	})
+
 	data := &dto.AuthLoginResp{
-		Token: req.Phone + "-" + req.Code,
+		Token: token,
 	}
 
 	response.Data(ctx, data)
@@ -33,11 +45,11 @@ func (c *AuthController) Register(ctx *gin.Context) {
 	}
 
 	us := new(services.UserService)
-	data, err := us.Register(req.Phone)
+	_, err := us.Register(req.Phone)
 	if err != nil {
 		response.BadRequest(ctx, err.Error())
 		return
 	}
 
-	response.Data(ctx, data)
+	response.Success(ctx)
 }

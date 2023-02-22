@@ -34,4 +34,8 @@ sms:
     accessKeyId: 123456
     accessKeySecret: 654321
     signName: go-yao-name
+jwt:
+  secret: zBqYyQrPNaIUsnRhsGtHLivjqiMjBVLS
+  expireTime: 120
+  maxRefreshTime: 86400
 

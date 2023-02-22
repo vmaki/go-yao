@@ -6,4 +6,5 @@ type AppConfig struct {
 	DataBase    DataBaseConfig
 	Redis       RedisConfig
 	Sms         SmsConfig
+	JWT         JWTConfig
 }

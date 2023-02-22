@@ -39,8 +39,7 @@ func (s *AuthRegisterReq) Generate(data interface{}) string {
 	}
 
 	_data := data.(*AuthRegisterReq)
-	err = validators.ValidateVerifyCode(_data.Template, _data.Phone, _data.Code)
-	return err
+	return validators.ValidateVerifyCode(_data.Template, _data.Phone, _data.Code)
 }
 
 type AuthRegisterResp struct {
