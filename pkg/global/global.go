@@ -6,7 +6,8 @@ import (
 )
 
 var (
-	Env  string
-	Conf = new(config.AppConfig)
-	DB   *gorm.DB
+	Env      string
+	Conf     = new(config.AppConfig)
+	DB       *gorm.DB
+	SMSScene = []string{"register", "login"}
 )

@@ -16,6 +16,13 @@ func RegisterAPIRoutes(r *gin.Engine) {
 			authGroup.POST("/register", ac.Register)
 		}
 
+		commonGroup := v1.Group("/common")
+		{
+			cc := new(v1C.CommonController)
+
+			commonGroup.POST("/send-sms", cc.SendSms)
+		}
+
 		testGroup := v1.Group("/test")
 		{
 			tc := new(v1C.TestController)

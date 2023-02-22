@@ -1,8 +1,10 @@
-package helpers
+package helper
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"net"
+	"time"
 )
 
 func GetClientIP(ctx *gin.Context) string {
@@ -20,4 +22,9 @@ func GetClientIP(ctx *gin.Context) string {
 	}
 
 	return clientIP
+}
+
+// MicrosecondsStr 将 time.Duration 类型输出为小数点后 3 位的 ms
+func MicrosecondsStr(elapsed time.Duration) string {
+	return fmt.Sprintf("%.3fms", float64(elapsed.Nanoseconds())/1e6)
 }

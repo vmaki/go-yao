@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/cast"
-	"go-yao/pkg/helpers"
+	"go-yao/pkg/helper"
 	"go-yao/pkg/logger"
 	"go.uber.org/zap"
 	"io"
@@ -50,10 +50,10 @@ func Logger() gin.HandlerFunc {
 			zap.Int("status", status),
 			zap.String("request", ctx.Request.Method+" "+ctx.Request.URL.String()),
 			zap.String("query", ctx.Request.URL.RawQuery),
-			zap.String("ip", helpers.GetClientIP(ctx)),
+			zap.String("ip", helper.GetClientIP(ctx)),
 			zap.String("user-agent", ctx.Request.UserAgent()),
 			zap.String("errors", ctx.Errors.ByType(gin.ErrorTypePrivate).String()),
-			zap.String("time", helpers.MicrosecondsStr(endTime)),
+			zap.String("time", helper.MicrosecondsStr(endTime)),
 		}
 
 		if ctx.Request.Method == "POST" || ctx.Request.Method == "PUT" || ctx.Request.Method == "DELETE" {

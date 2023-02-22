@@ -3,7 +3,7 @@ package logger
 import (
 	"context"
 	"errors"
-	"go-yao/pkg/helpers"
+	"go-yao/pkg/helper"
 	"path/filepath"
 	"runtime"
 	"strings"
@@ -59,7 +59,7 @@ func (l GormLogger) Trace(ctx context.Context, begin time.Time, fc func() (strin
 	// 通用字段
 	logFields := []zap.Field{
 		zap.String("sql", sql),
-		zap.String("time", helpers.MicrosecondsStr(elapsed)),
+		zap.String("time", helper.MicrosecondsStr(elapsed)),
 		zap.Int64("rows", rows),
 	}
 
