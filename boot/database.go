@@ -5,11 +5,11 @@ import (
 	"fmt"
 	"go-yao/pkg/database"
 	"go-yao/pkg/global"
+	"go-yao/pkg/logger"
 	"time"
 
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
-	"gorm.io/gorm/logger"
 )
 
 // SetupDB 初始化数据库和 ORM
@@ -37,7 +37,7 @@ func SetupDB() {
 	}
 
 	// 连接数据库，并设置 GORM 的日志模式
-	database.Connect(dialector, logger.Default.LogMode(logger.Info))
+	database.Connect(dialector, logger.NewGormLogger())
 
 	database.SqlDB.SetMaxOpenConns(dbConfig.MaxOpenConnections)
 	database.SqlDB.SetMaxIdleConns(dbConfig.MaxIdleConnections)
