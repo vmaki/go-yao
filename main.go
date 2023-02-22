@@ -15,6 +15,7 @@ func init() {
 	boot.SetupConfig(global.Env)
 	boot.SetupLogger()
 	boot.SetupDB()
+	boot.SetupRedis()
 }
 
 func main() {

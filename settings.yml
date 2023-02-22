@@ -23,4 +23,10 @@ database:
   maxOpenConnections: 100
   maxIdleConnections: 25
   maxLifeSeconds: 300
+redis:
+  host: localhost
+  port: 6379
+  username:
+  password:
+  database: 0
 

@@ -22,6 +22,7 @@ func RegisterAPIRoutes(r *gin.Engine) {
 
 			testGroup.GET("/", tc.Hello)
 			testGroup.GET("/500", tc.Err)
+			testGroup.GET("/redis", tc.Redis)
 		}
 	}
 }

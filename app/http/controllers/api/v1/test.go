@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"go-yao/app/http/controllers/api"
+	"go-yao/pkg/redis"
 	"go-yao/pkg/response"
 )
 
@@ -18,4 +19,9 @@ func (c *TestController) Hello(ctx *gin.Context) {
 func (c *TestController) Err(ctx *gin.Context) {
 	panic("这是 panic 测试")
 	fmt.Println("11111")
+}
+
+func (c *TestController) Redis(ctx *gin.Context) {
+	redis.Client.Set("msg", "hello world", 64)
+	response.Success(ctx)
 }

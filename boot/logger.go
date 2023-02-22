@@ -6,6 +6,6 @@ import (
 )
 
 func SetupLogger() {
-	log := global.Conf.Log
-	logger.InitLogger(log.Level, log.Type, log.Filename, log.MaxSize, log.MaxAge, log.MaxBackup, log.Compress)
+	config := global.Conf.Log
+	logger.InitLogger(config.Level, config.Type, config.Filename, config.MaxSize, config.MaxAge, config.MaxBackup, config.Compress)
 }

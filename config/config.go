@@ -4,4 +4,5 @@ type AppConfig struct {
 	Application ApplicationConfig
 	Log         LogConfig
 	DataBase    DataBaseConfig
+	Redis       RedisConfig
 }
