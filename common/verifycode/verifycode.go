@@ -32,9 +32,13 @@ func NewVerifyCode() *VerifyCode {
 	return verifyCode
 }
 
+func (vc *VerifyCode) cacheKey(template, phone string) string {
+	return template + ":" + phone
+}
+
 // SendSMS 发送短信
 func (vc *VerifyCode) SendSMS(template, phone string) bool {
-	code := vc.generateVerifyCode(template + ":" + phone) // 生成验证码
+	code := vc.generateVerifyCode(vc.cacheKey(template, phone)) // 生成验证码
 
 	if global.Conf.Application.Mode == "local" {
 		logger.DebugString("VerifyCode", template, code)
@@ -56,6 +60,6 @@ func (vc *VerifyCode) generateVerifyCode(key string) string {
 	return code
 }
 
-func (vc *VerifyCode) CheckAnswer(key string, answer string) bool {
-	return vc.Store.Verify(key, answer, false)
+func (vc *VerifyCode) CheckAnswer(template, phone string, answer string) bool {
+	return vc.Store.Verify(vc.cacheKey(template, phone), answer, false)
 }
