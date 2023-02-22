@@ -2,7 +2,7 @@ package boot
 
 import (
 	"github.com/gin-gonic/gin"
-	"go-yao/app/http/middlewares"
+	"go-yao/app/middlewares"
 	"go-yao/pkg/response"
 	"go-yao/routes"
 	"net/http"
