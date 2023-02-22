@@ -6,7 +6,7 @@ import (
 )
 
 func RegisterAPIRoutes(r *gin.Engine) {
-	v1 := r.Group("/v1")
+	v1 := r.Group("/api/v1")
 	{
 		authGroup := v1.Group("/auth")
 		{
