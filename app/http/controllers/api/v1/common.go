@@ -4,9 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"go-yao/app/http/controllers/api"
 	"go-yao/app/http/dto"
-	"go-yao/common/cache"
-	"go-yao/common/helpers"
-	"go-yao/pkg/redis"
+	"go-yao/common/verifycode"
 	"go-yao/pkg/request"
 	"go-yao/pkg/response"
 )
@@ -21,8 +19,7 @@ func (c *CommonController) SendSms(ctx *gin.Context) {
 		return
 	}
 
-	code := helpers.RandomNumber(6)
-	res := redis.Client.Set(cache.GetSmsCacheKey(req.Scene, req.Phone), code, 60*5)
+	res := verifycode.NewVerifyCode().SendSMS(req.Template, req.Phone)
 	if !res {
 		response.BadRequest(ctx, "请求短信失败, 请稍后重试")
 		return

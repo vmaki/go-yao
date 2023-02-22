@@ -8,11 +8,11 @@ import (
 	"go-yao/pkg/logger"
 )
 
-type Aliyun struct {
+type AliyunDriver struct {
 }
 
 // NewClient 初始化客户端
-func (s *Aliyun) NewClient(accessKeyId, accessKeySecret string) (*smsApi.Client, error) {
+func (s *AliyunDriver) NewClient(accessKeyId, accessKeySecret string) (*smsApi.Client, error) {
 	apiConfig := &openApi.Config{
 		Endpoint:        tea.String("dysmsapi.aliyuncs.com"),
 		AccessKeyId:     tea.String(accessKeyId),
@@ -22,7 +22,7 @@ func (s *Aliyun) NewClient(accessKeyId, accessKeySecret string) (*smsApi.Client,
 	return smsApi.NewClient(apiConfig)
 }
 
-func (s *Aliyun) Send(phone string, message Message, config map[string]string) bool {
+func (s *AliyunDriver) Send(phone string, message Message, config map[string]string) bool {
 	client, err := s.NewClient(config["access_key_id"], config["access_key_secret"])
 	if err != nil {
 		logger.ErrorString("短信[阿里云]", "初始化客户端失败", err.Error())

@@ -20,7 +20,7 @@ var sms *SMS
 
 func NewSMS() *SMS {
 	once.Do(func() {
-		sms = &SMS{Driver: &Aliyun{}}
+		sms = &SMS{Driver: &AliyunDriver{}}
 	})
 
 	return sms
