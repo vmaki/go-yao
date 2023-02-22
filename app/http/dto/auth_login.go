@@ -30,6 +30,6 @@ func (s *AuthLoginReq) Generate(data interface{}) string {
 	return request.GoValidate(data, rules, messages)
 }
 
-type LoginResp struct {
+type AuthLoginResp struct {
 	Token string `json:"token"`
 }

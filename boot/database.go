@@ -42,4 +42,6 @@ func SetupDB() {
 	database.SqlDB.SetMaxOpenConns(dbConfig.MaxOpenConnections)
 	database.SqlDB.SetMaxIdleConns(dbConfig.MaxIdleConnections)
 	database.SqlDB.SetConnMaxLifetime(time.Duration(dbConfig.MaxLifeSeconds) * time.Second)
+
+	// global.DB.AutoMigrate(&model.User{}) // 自动迁移
 }

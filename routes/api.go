@@ -13,6 +13,7 @@ func RegisterAPIRoutes(r *gin.Engine) {
 			ac := new(v1C.AuthController)
 
 			authGroup.POST("/login", ac.Login)
+			authGroup.POST("/register", ac.Register)
 		}
 
 		testGroup := v1.Group("/test")
