@@ -29,4 +29,9 @@ redis:
   username:
   password:
   database: 0
+sms:
+  aliyun:
+    accessKeyId: 123456
+    accessKeySecret: 654321
+    signName: go-yao-name
 
