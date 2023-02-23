@@ -7,9 +7,9 @@ import (
 )
 
 type AuthRegisterReq struct {
-	Phone    string `json:"phone,omitempty" valid:"phone"`
-	Code     string `json:"code,omitempty" valid:"code"`
-	Template string `json:"template,omitempty" valid:"template"`
+	Phone    string `json:"phone,omitempty" valid:"phone"`       // 手机号码
+	Code     string `json:"code,omitempty" valid:"code"`         // 短信验证码
+	Template string `json:"template,omitempty" valid:"template"` // 短信场景码
 }
 
 func (s *AuthRegisterReq) Generate(data interface{}) string {
@@ -22,14 +22,14 @@ func (s *AuthRegisterReq) Generate(data interface{}) string {
 	messages := govalidator.MapData{
 		"phone": []string{
 			"required:手机号为必填项",
-			"digits:手机号长度错误",
+			"digits:手机号长度必须为 11 位的数字",
 		},
 		"code": []string{
 			"required:验证码为必填项",
 			"digits:验证码长度必须为 6 位的数字",
 		},
 		"template": []string{
-			"required:场景 code为必填项",
+			"required:场景为必填项",
 		},
 	}
 
@@ -43,5 +43,5 @@ func (s *AuthRegisterReq) Generate(data interface{}) string {
 }
 
 type AuthRegisterResp struct {
-	Token string `json:"token"`
+	Token string `json:"token"` // jwt-token
 }

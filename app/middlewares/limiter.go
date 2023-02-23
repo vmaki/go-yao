@@ -18,51 +18,50 @@ import (
 // * 1000 reqs/hour: "1000-H"
 // * 2000 reqs/day: "2000-D"
 func LimitIP(limit string) gin.HandlerFunc {
-	return func(c *gin.Context) {
-		key := limiter.GetKeyIP(c)
-		if ok := limitHandler(c, key, limit); !ok {
+	return func(ctx *gin.Context) {
+		key := limiter.GetKeyIP(ctx)
+		if ok := limitHandler(ctx, key, limit); !ok {
 			return
 		}
 
-		c.Next()
+		ctx.Next()
 	}
 }
 
 // LimitPerRoute 限流中间件，用在单独的路由中
 func LimitPerRoute(limit string) gin.HandlerFunc {
-	return func(c *gin.Context) {
+	return func(ctx *gin.Context) {
 		// 针对单个路由，增加访问次数
-		c.Set("limiter-once", false)
+		ctx.Set("limiter-once", false)
 
 		// 针对 IP + 路由进行限流
-		key := limiter.GetKeyRouteWithIP(c)
-		if ok := limitHandler(c, key, limit); !ok {
+		key := limiter.GetKeyRouteWithIP(ctx)
+		if ok := limitHandler(ctx, key, limit); !ok {
 			return
 		}
 
-		c.Next()
+		ctx.Next()
 	}
 }
 
-func limitHandler(c *gin.Context, key string, limit string) bool {
-
+func limitHandler(ctx *gin.Context, key string, limit string) bool {
 	// 获取超额的情况
-	rate, err := limiter.CheckRate(c, key, limit)
+	rate, err := limiter.CheckRate(ctx, key, limit)
 	if err != nil {
 		logger.LogIf(err)
-		response.Error(c)
+		response.Error(ctx)
 		return false
 	}
 
 	// ---- 设置标头信息-----
-	c.Header("X-RateLimit-Limit", cast.ToString(rate.Limit))         // 最大访问次数
-	c.Header("X-RateLimit-Remaining", cast.ToString(rate.Remaining)) // 剩余的访问次数
-	c.Header("X-RateLimit-Reset", cast.ToString(rate.Reset))         // 到该时间点，访问次数会重置为 X-RateLimit-Limit
+	ctx.Header("X-RateLimit-Limit", cast.ToString(rate.Limit))         // 最大访问次数
+	ctx.Header("X-RateLimit-Remaining", cast.ToString(rate.Remaining)) // 剩余的访问次数
+	ctx.Header("X-RateLimit-Reset", cast.ToString(rate.Reset))         // 到该时间点，访问次数会重置为 X-RateLimit-Limit
 
 	// 超额
 	if rate.Reached {
 		// 提示用户超额了
-		c.AbortWithStatusJSON(http.StatusTooManyRequests, gin.H{
+		ctx.AbortWithStatusJSON(http.StatusTooManyRequests, gin.H{
 			"message": "接口请求太频繁",
 		})
 

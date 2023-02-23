@@ -13,7 +13,7 @@ type CommonController struct {
 	api.BaseAPIController
 }
 
-func (c *CommonController) SendSms(ctx *gin.Context) {
+func (ctr *CommonController) SendSms(ctx *gin.Context) {
 	req := dto.CommonSendSmsReq{}
 	if ok := request.Validate(ctx, &req); !ok {
 		return

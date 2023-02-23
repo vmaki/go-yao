@@ -37,7 +37,7 @@ func (s *UserService) maskPhone(phone string) string {
 	return fmt.Sprintf("%s****%s", phone[:3], phone[len(phone)-4:])
 }
 
-// LoginByPhone 登录指定用户
+// LoginByPhone 使用手机号码登录
 func (s *UserService) LoginByPhone(phone string) (user.User, error) {
 	userModel := user.GetByPhone(phone)
 	if userModel.ID == 0 {

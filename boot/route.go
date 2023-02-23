@@ -12,7 +12,7 @@ import (
 func SetupRoute(r *gin.Engine) {
 	registerGlobalMiddleware(r)
 
-	routes.RegisterAPIRoutes(r)
+	routes.RegisterAPIRoutes(r) // 注册 api 路由
 
 	notFoundHandle(r)
 }
@@ -26,6 +26,7 @@ func registerGlobalMiddleware(r *gin.Engine) {
 func notFoundHandle(r *gin.Engine) {
 	r.NoRoute(func(ctx *gin.Context) {
 		accept := ctx.GetHeader("Accept")
+
 		if strings.Contains(accept, "text/html") {
 			ctx.String(http.StatusNotFound, "页面返回 404")
 		} else {

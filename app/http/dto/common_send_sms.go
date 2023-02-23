@@ -6,8 +6,8 @@ import (
 )
 
 type CommonSendSmsReq struct {
-	Phone    string `json:"phone,omitempty" valid:"phone"`
-	Template string `json:"template,omitempty" valid:"template"`
+	Phone    string `json:"phone,omitempty" valid:"phone"`       // 手机号码
+	Template string `json:"template,omitempty" valid:"template"` // 短信场景码
 }
 
 func (s *CommonSendSmsReq) Generate(data interface{}) string {
@@ -19,10 +19,10 @@ func (s *CommonSendSmsReq) Generate(data interface{}) string {
 	messages := govalidator.MapData{
 		"phone": []string{
 			"required:手机号为必填项",
-			"digits:手机号长度错误",
+			"digits:手机号长度必须为 11 位的数字",
 		},
 		"template": []string{
-			"required:模板code为必填项",
+			"required:场景为必填项",
 		},
 	}
 

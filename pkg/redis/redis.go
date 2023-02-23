@@ -14,8 +14,10 @@ type Server struct {
 	Client  *redisLib.Client
 }
 
-var once sync.Once
-var Client *Server
+var (
+	once   sync.Once
+	Client *Server
+)
 
 func ConnectRedis(address string, username string, password string, db int) {
 	once.Do(func() {

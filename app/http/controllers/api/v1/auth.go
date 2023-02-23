@@ -14,12 +14,13 @@ type AuthController struct {
 	api.BaseAPIController
 }
 
-func (c *AuthController) Login(ctx *gin.Context) {
+func (ctr *AuthController) Login(ctx *gin.Context) {
 	req := dto.AuthLoginReq{}
 	if ok := request.Validate(ctx, &req); !ok {
 		return
 	}
 
+	// 使用手机号码登录
 	us := new(services.UserService)
 	user, err := us.LoginByPhone(req.Phone)
 	if err != nil {
@@ -27,6 +28,7 @@ func (c *AuthController) Login(ctx *gin.Context) {
 		return
 	}
 
+	// 生成 Token
 	token := jwt.NewJWT().IssueToken(jwt.UserInfo{
 		UserID: user.ID,
 	})
@@ -34,16 +36,16 @@ func (c *AuthController) Login(ctx *gin.Context) {
 	data := &dto.AuthLoginResp{
 		Token: token,
 	}
-
 	response.Data(ctx, data)
 }
 
-func (c *AuthController) Register(ctx *gin.Context) {
+func (ctr *AuthController) Register(ctx *gin.Context) {
 	req := dto.AuthRegisterReq{}
 	if ok := request.Validate(ctx, &req); !ok {
 		return
 	}
 
+	// 注册
 	us := new(services.UserService)
 	_, err := us.Register(req.Phone)
 	if err != nil {
@@ -54,16 +56,15 @@ func (c *AuthController) Register(ctx *gin.Context) {
 	response.Success(ctx)
 }
 
-func (c *AuthController) RefreshToken(ctx *gin.Context) {
+func (ctr *AuthController) RefreshToken(ctx *gin.Context) {
 	token, err := jwt.NewJWT().RefreshToken(ctx)
 	if err != nil {
 		response.BadRequest(ctx, err.Error())
 		return
 	}
 
-	data := &dto.AuthLoginResp{
+	data := &dto.AuthRefreshTokenResp{
 		Token: token,
 	}
-
 	response.Data(ctx, data)
 }

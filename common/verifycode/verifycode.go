@@ -2,10 +2,10 @@ package verifycode
 
 import (
 	"go-yao/common/helpers"
-	"go-yao/common/sms"
 	"go-yao/pkg/global"
 	"go-yao/pkg/logger"
 	"go-yao/pkg/redis"
+	"go-yao/pkg/sms"
 	"sync"
 )
 
@@ -24,7 +24,7 @@ func NewVerifyCode() *VerifyCode {
 		verifyCode = &VerifyCode{
 			Store: &RedisStore{
 				RedisClient: redis.Client,
-				KeyPrefix:   "sms:",
+				KeyPrefix:   global.Conf.Application.Name + ":sms:",
 			},
 		}
 	})
@@ -40,7 +40,8 @@ func (vc *VerifyCode) cacheKey(template, phone string) string {
 func (vc *VerifyCode) SendSMS(template, phone string) bool {
 	code := vc.generateVerifyCode(vc.cacheKey(template, phone)) // 生成验证码
 
-	if global.Conf.Application.Mode == "local" {
+	// 本地环境不发送短信
+	if helpers.IsLocal() {
 		logger.DebugString("VerifyCode", template, code)
 		return true
 	}

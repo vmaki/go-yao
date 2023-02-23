@@ -2,7 +2,7 @@ package logger
 
 import (
 	"fmt"
-	"go-yao/pkg/global"
+	"go-yao/common/helpers"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 	"gopkg.in/natefinch/lumberjack.v2"
@@ -53,7 +53,7 @@ func getEncoder() zapcore.Encoder {
 	}
 
 	// 本地环境配置
-	if global.Conf.Application.Mode == "local" {
+	if helpers.IsLocal() {
 		encoderConfig.EncodeLevel = zapcore.CapitalColorLevelEncoder // 终端输出的关键词高亮
 		return zapcore.NewConsoleEncoder(encoderConfig)              // 本地设置内置的 Console 解码器（支持 stacktrace 换行）
 	}
@@ -85,7 +85,7 @@ func getLogWriter(logType, filename string, maxSize, maxAge, maxBackup int, comp
 	}
 
 	// 本地开发终端打印
-	if global.Conf.Application.Mode == "local" {
+	if helpers.IsLocal() {
 		//return zapcore.NewMultiWriteSyncer(zapcore.AddSync(os.Stdout), zapcore.AddSync(lumberJackLogger))
 		return zapcore.AddSync(os.Stdout)
 	}
