@@ -3,7 +3,7 @@ package request
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/thedevsaddam/govalidator"
-	"go-yao/pkg/response"
+	"go-yao/common/response"
 )
 
 func Validate(ctx *gin.Context, req IRequest) bool {

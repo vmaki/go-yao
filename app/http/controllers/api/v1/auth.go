@@ -5,9 +5,9 @@ import (
 	"go-yao/app/http/controllers/api"
 	"go-yao/app/http/dto"
 	"go-yao/app/services"
+	"go-yao/common/request"
+	"go-yao/common/response"
 	"go-yao/pkg/jwt"
-	"go-yao/pkg/request"
-	"go-yao/pkg/response"
 )
 
 type AuthController struct {

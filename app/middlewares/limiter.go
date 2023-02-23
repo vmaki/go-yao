@@ -1,9 +1,9 @@
 package middlewares
 
 import (
+	"go-yao/common/response"
 	"go-yao/pkg/limiter"
 	"go-yao/pkg/logger"
-	"go-yao/pkg/response"
 	"net/http"
 
 	"github.com/gin-gonic/gin"

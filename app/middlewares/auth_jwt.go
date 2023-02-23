@@ -1,8 +1,8 @@
 package middlewares
 
 import (
+	"go-yao/common/response"
 	"go-yao/pkg/jwt"
-	"go-yao/pkg/response"
 
 	"github.com/gin-gonic/gin"
 )

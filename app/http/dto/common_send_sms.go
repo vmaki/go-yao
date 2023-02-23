@@ -2,7 +2,7 @@ package dto
 
 import (
 	"github.com/thedevsaddam/govalidator"
-	"go-yao/pkg/request"
+	"go-yao/common/request"
 )
 
 type CommonSendSmsReq struct {

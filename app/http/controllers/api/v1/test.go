@@ -3,8 +3,8 @@ package v1
 import (
 	"github.com/gin-gonic/gin"
 	"go-yao/app/http/controllers/api"
+	"go-yao/common/response"
 	"go-yao/pkg/redis"
-	"go-yao/pkg/response"
 )
 
 type TestController struct {

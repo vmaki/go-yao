@@ -3,7 +3,7 @@ package dto
 import (
 	"github.com/thedevsaddam/govalidator"
 	"go-yao/app/http/dto/validators"
-	"go-yao/pkg/request"
+	"go-yao/common/request"
 )
 
 type AuthLoginReq struct {

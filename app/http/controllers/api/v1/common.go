@@ -4,9 +4,9 @@ import (
 	"github.com/gin-gonic/gin"
 	"go-yao/app/http/controllers/api"
 	"go-yao/app/http/dto"
+	"go-yao/common/request"
+	"go-yao/common/response"
 	"go-yao/common/verifycode"
-	"go-yao/pkg/request"
-	"go-yao/pkg/response"
 )
 
 type CommonController struct {
