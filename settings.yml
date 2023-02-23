@@ -38,4 +38,6 @@ jwt:
   secret: zBqYyQrPNaIUsnRhsGtHLivjqiMjBVLS
   expireTime: 120
   maxRefreshTime: 86400
+other:
+  smsExpireTime: 300
 

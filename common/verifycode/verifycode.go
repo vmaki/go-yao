@@ -42,7 +42,7 @@ func (vc *VerifyCode) SendSMS(template, phone string) bool {
 
 	// 本地环境不发送短信
 	if helpers.IsLocal() {
-		logger.DebugString("VerifyCode", template, code)
+		logger.DebugString("短信验证码", template, phone+"#"+code)
 		return true
 	}
 
@@ -56,7 +56,7 @@ func (vc *VerifyCode) SendSMS(template, phone string) bool {
 // generateVerifyCode 生成验证码，并放置于 Redis 中
 func (vc *VerifyCode) generateVerifyCode(key string) string {
 	code := helpers.RandomNumber(6)
-	vc.Store.Set(key, code, 60*10)
+	vc.Store.Set(key, code, global.Conf.Other.SmsExpireTime)
 
 	return code
 }

@@ -23,7 +23,7 @@ func (s *AuthRegisterReq) Generate(data interface{}) error {
 		"phone": []string{
 			"required:手机号为必填项",
 			"digits:手机号长度必须为 11 位的数字",
-			"not_exists:该手机号码已注册, 请勿重复注册",
+			"not_exists:该手机已注册可直接登录",
 		},
 		"code": []string{
 			"required:验证码为必填项",

@@ -33,7 +33,7 @@ var codeMsgMap = map[ResCode]string{
 	CodeUnauthorized:    "身份验证失败，请稍后再试",
 	CodeNotFound:        "路由未定义，请确认 url 和请求方法是否正确",
 	CodeValidationErr:   "请求参数有误",
-	CodeTooManyRequests: "接口请求太频繁",
+	CodeTooManyRequests: "请求过于频繁",
 
 	CodeServerBusy:             "服务器繁忙",
 	CodeTokenExpired:           "令牌已过期",

@@ -11,6 +11,6 @@ func RegisterV1CommonRoutes(g *gin.RouterGroup) {
 	{
 		cc := new(v1.CommonController)
 
-		r.POST("/send-sms", middlewares.LimitPerRoute("20-H"), cc.SendSms)
+		r.POST("/send-sms", middlewares.LimitPerRoute("1-M"), cc.SendSms)
 	}
 }
