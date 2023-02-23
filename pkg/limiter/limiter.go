@@ -18,7 +18,7 @@ func GetKeyIP(ctx *gin.Context) string {
 
 // GetKeyRouteWithIP 限制流 key: 路由+IP，针对单个路由做限流
 func GetKeyRouteWithIP(ctx *gin.Context) string {
-	return routeToKeyString(ctx.FullPath()) + ctx.ClientIP()
+	return routeToKeyString(ctx.FullPath()) + helper.GetClientIP(ctx)
 }
 
 // CheckRate 检测请求是否超额
