@@ -1,7 +1,7 @@
 package sms
 
 import (
-	"go-yao/pkg/global"
+	"go-yao/common/global"
 	"sync"
 )
 

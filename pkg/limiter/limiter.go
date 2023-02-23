@@ -4,7 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	limiterLib "github.com/ulule/limiter/v3"
 	limiterRedis "github.com/ulule/limiter/v3/drivers/store/redis"
-	"go-yao/pkg/global"
+	"go-yao/common/global"
 	"go-yao/pkg/helper"
 	"go-yao/pkg/logger"
 	"go-yao/pkg/redis"

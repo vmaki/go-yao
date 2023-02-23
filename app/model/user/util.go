@@ -1,6 +1,6 @@
 package user
 
-import "go-yao/pkg/global"
+import "go-yao/common/global"
 
 // IsPhoneExist 判断手机号已被注册
 func IsPhoneExist(phone string) bool {

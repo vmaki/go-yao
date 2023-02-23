@@ -3,9 +3,9 @@ package jwt
 import (
 	"github.com/gin-gonic/gin"
 	jwtLib "github.com/golang-jwt/jwt/v4"
+	"go-yao/common/global"
 	"go-yao/common/helpers"
 	"go-yao/common/response"
-	"go-yao/pkg/global"
 	"go-yao/pkg/logger"
 	"strings"
 	"time"

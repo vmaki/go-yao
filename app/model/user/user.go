@@ -2,7 +2,7 @@ package user
 
 import (
 	"go-yao/app/model"
-	"go-yao/pkg/global"
+	"go-yao/common/global"
 )
 
 // User 用户模型

@@ -2,7 +2,7 @@ package database
 
 import (
 	"database/sql"
-	"go-yao/pkg/global"
+	"go-yao/common/global"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
 )

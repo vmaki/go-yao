@@ -5,7 +5,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/cast"
 	"go-yao/boot"
-	"go-yao/pkg/global"
+	"go-yao/common/global"
 )
 
 func init() {

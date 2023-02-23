@@ -1,7 +1,7 @@
 package helpers
 
 import (
-	"go-yao/pkg/global"
+	"go-yao/common/global"
 	"time"
 )
 

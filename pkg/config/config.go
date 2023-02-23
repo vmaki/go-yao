@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"github.com/fsnotify/fsnotify"
 	"github.com/spf13/viper"
-	"go-yao/pkg/global"
+	"go-yao/common/global"
 	"go-yao/pkg/logger"
 	"go.uber.org/zap"
 	"os"

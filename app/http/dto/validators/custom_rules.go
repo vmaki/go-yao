@@ -3,7 +3,7 @@ package validators
 import (
 	"errors"
 	"fmt"
-	"go-yao/pkg/global"
+	"go-yao/common/global"
 	"strings"
 
 	"github.com/thedevsaddam/govalidator"

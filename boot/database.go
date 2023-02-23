@@ -3,8 +3,8 @@ package boot
 import (
 	"errors"
 	"fmt"
+	"go-yao/common/global"
 	"go-yao/pkg/database"
-	"go-yao/pkg/global"
 	"go-yao/pkg/logger"
 	"time"
 

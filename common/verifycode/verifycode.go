@@ -1,8 +1,8 @@
 package verifycode
 
 import (
+	"go-yao/common/global"
 	"go-yao/common/helpers"
-	"go-yao/pkg/global"
 	"go-yao/pkg/logger"
 	"go-yao/pkg/redis"
 	"go-yao/pkg/sms"

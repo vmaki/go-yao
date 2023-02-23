@@ -2,7 +2,7 @@ package boot
 
 import (
 	"fmt"
-	"go-yao/pkg/global"
+	"go-yao/common/global"
 	"go-yao/pkg/redis"
 )
 
