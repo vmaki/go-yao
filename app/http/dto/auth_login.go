@@ -12,7 +12,7 @@ type AuthLoginReq struct {
 	Template string `json:"template,omitempty" valid:"template"` // 短信场景码
 }
 
-func (s *AuthLoginReq) Generate(data interface{}) string {
+func (s *AuthLoginReq) Generate(data interface{}) error {
 	rules := govalidator.MapData{
 		"phone":    []string{"required", "digits:11"},
 		"code":     []string{"required", "digits:6"},
@@ -34,7 +34,7 @@ func (s *AuthLoginReq) Generate(data interface{}) string {
 	}
 
 	err := request.GoValidate(data, rules, messages)
-	if err != "" {
+	if err != nil {
 		return err
 	}
 

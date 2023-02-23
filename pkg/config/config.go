@@ -18,7 +18,7 @@ func init() {
 
 	v.SetConfigType("yml")
 	v.AddConfigPath(".")
-	v.SetEnvPrefix("goYao")
+	v.SetEnvPrefix("go-yao")
 	v.AutomaticEnv()
 }
 

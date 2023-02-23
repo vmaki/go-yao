@@ -51,7 +51,6 @@ func (rds Server) Ping() error {
 func (rds Server) Set(key string, value interface{}, expiration int64) bool {
 	if err := rds.Client.Set(rds.Context, key, value, time.Duration(expiration)*time.Second).Err(); err != nil {
 		logger.ErrorString("Redis", "Set", err.Error())
-
 		return false
 	}
 
@@ -86,7 +85,6 @@ func (rds Server) Has(key string) bool {
 func (rds Server) Del(keys ...string) bool {
 	if err := rds.Client.Del(rds.Context, keys...).Err(); err != nil {
 		logger.ErrorString("Redis", "Del", err.Error())
-
 		return false
 	}
 
@@ -96,7 +94,6 @@ func (rds Server) Del(keys ...string) bool {
 func (rds Server) Incr(key string) bool {
 	if err := rds.Client.Incr(rds.Context, key).Err(); err != nil {
 		logger.ErrorString("Redis", "Incr", err.Error())
-
 		return false
 	}
 
@@ -106,7 +103,6 @@ func (rds Server) Incr(key string) bool {
 func (rds Server) IncrBy(key string, value int64) bool {
 	if err := rds.Client.IncrBy(rds.Context, key, value).Err(); err != nil {
 		logger.ErrorString("Redis", "IncrBy", err.Error())
-
 		return false
 	}
 
@@ -116,7 +112,6 @@ func (rds Server) IncrBy(key string, value int64) bool {
 func (rds Server) Decr(key string) bool {
 	if err := rds.Client.Decr(rds.Context, key).Err(); err != nil {
 		logger.ErrorString("Redis", "Decr", err.Error())
-
 		return false
 	}
 
@@ -126,7 +121,6 @@ func (rds Server) Decr(key string) bool {
 func (rds Server) DecrBy(key string, value int64) bool {
 	if err := rds.Client.DecrBy(rds.Context, key, value).Err(); err != nil {
 		logger.ErrorString("Redis", "DecrBy", err.Error())
-
 		return false
 	}
 

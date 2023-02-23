@@ -9,12 +9,6 @@ import (
 )
 
 // LimitIP 全局限流中间件，针对 IP 进行限流
-// limit 为格式化字符串，如 "5-S" ，示例:
-//
-// * 5 reqs/second: "5-S"
-// * 10 reqs/minute: "10-M"
-// * 1000 reqs/hour: "1000-H"
-// * 2000 reqs/day: "2000-D"
 func LimitIP(limit string) gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		key := limiter.GetKeyIP(ctx)
@@ -42,6 +36,12 @@ func LimitPerRoute(limit string) gin.HandlerFunc {
 	}
 }
 
+// limit 为格式化字符串，如 "5-S" ，示例:
+//
+// * 5 reqs/second: "5-S"
+// * 10 reqs/minute: "10-M"
+// * 1000 reqs/hour: "1000-H"
+// * 2000 reqs/day: "2000-D"
 func limitHandler(ctx *gin.Context, key string, limit string) bool {
 	// 获取超额的情况
 	rate, err := limiter.CheckRate(ctx, key, limit)

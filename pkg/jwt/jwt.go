@@ -1,10 +1,10 @@
 package jwt
 
 import (
-	"errors"
 	"github.com/gin-gonic/gin"
 	jwtLib "github.com/golang-jwt/jwt/v4"
 	"go-yao/common/helpers"
+	"go-yao/common/response"
 	"go-yao/pkg/global"
 	"go-yao/pkg/logger"
 	"strings"
@@ -12,12 +12,12 @@ import (
 )
 
 var (
-	ErrTokenExpired           = errors.New("令牌已过期")
-	ErrTokenExpiredMaxRefresh = errors.New("令牌已过最大刷新时间")
-	ErrTokenMalformed         = errors.New("请求令牌格式有误")
-	ErrTokenInvalid           = errors.New("请求令牌无效")
-	ErrHeaderEmpty            = errors.New("需要认证才能访问！")
-	ErrHeaderMalformed        = errors.New("请求头中 Authorization 格式有误")
+	ErrTokenExpired           = response.New(response.CodeTokenExpired)
+	ErrTokenExpiredMaxRefresh = response.New(response.CodeTokenExpiredMaxRefresh)
+	ErrTokenMalformed         = response.New(response.CodeTokenMalformed)
+	ErrTokenInvalid           = response.New(response.CodeTokenInvalid)
+	ErrHeaderEmpty            = response.New(response.CodeHeaderEmpty)
+	ErrHeaderMalformed        = response.New(response.CodeHeaderMalformed)
 )
 
 type JWT struct {

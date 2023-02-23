@@ -6,23 +6,21 @@ import (
 	"go-yao/common/response"
 )
 
-func Validate(ctx *gin.Context, req IRequest) bool {
+func Validate(ctx *gin.Context, req IRequest) error {
 	if err := ctx.ShouldBindJSON(req); err != nil {
-		response.BadRequest(ctx)
-		return false
+		return response.New(response.CodeBadRequest)
 	}
 
 	// 表单验证
-	errs := req.Generate(req)
-	if errs != "" {
-		response.ValidationError(ctx, errs)
-		return false
+	err := req.Generate(req)
+	if err != nil {
+		return err
 	}
 
-	return true
+	return nil
 }
 
-func GoValidate(data interface{}, rules govalidator.MapData, messages govalidator.MapData) string {
+func GoValidate(data interface{}, rules govalidator.MapData, messages govalidator.MapData) error {
 	opts := govalidator.Options{
 		Data:          data,
 		Rules:         rules,
@@ -39,8 +37,8 @@ func GoValidate(data interface{}, rules govalidator.MapData, messages govalidato
 			break
 		}
 
-		return str
+		return response.New(response.CodeValidationErr, str)
 	}
 
-	return ""
+	return nil
 }

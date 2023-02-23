@@ -20,14 +20,14 @@ func Success(ctx *gin.Context, data interface{}) {
 
 // Error 自定义错误
 func Error(ctx *gin.Context, err error) {
-	switch err := err.(type) {
+	switch _err := err.(type) {
 	case *RespData:
 		JSON(ctx, RespData{
-			Code: err.Code,
-			Msg:  err.Msg,
+			Code: _err.Code,
+			Msg:  _err.Msg,
 		})
 	default:
-		BadRequest(ctx)
+		SysError(ctx)
 	}
 }
 
@@ -48,26 +48,23 @@ func BadRequest(ctx *gin.Context) {
 }
 
 // Unauthorized 解析 jwt 失败时调用
-func Unauthorized(ctx *gin.Context, msg ...string) {
-	ctx.AbortWithStatusJSON(http.StatusUnauthorized, RespData{
-		Code: CodeUnauthorized,
-		Msg:  defaultMessage(CodeValidationErr.Msg(), msg...),
-	})
+func Unauthorized(ctx *gin.Context, err error) {
+	switch _err := err.(type) {
+	case *RespData:
+		ctx.AbortWithStatusJSON(http.StatusUnauthorized, RespData{
+			Code: _err.Code,
+			Msg:  _err.Msg,
+		})
+	default:
+		SysError(ctx)
+	}
 }
 
 // Abort404 响应 404 请求
 func Abort404(ctx *gin.Context) {
 	ctx.AbortWithStatusJSON(http.StatusNotFound, RespData{
 		Code: CodeNotFound,
-		Msg:  defaultMessage(CodeNotFound.Msg()),
-	})
-}
-
-// ValidationError 表单验证不通过时调用
-func ValidationError(ctx *gin.Context, msg ...string) {
-	ctx.AbortWithStatusJSON(http.StatusUnprocessableEntity, RespData{
-		Code: CodeValidationErr,
-		Msg:  defaultMessage(CodeValidationErr.Msg(), msg...),
+		Msg:  CodeNotFound.Msg(),
 	})
 }
 

@@ -14,7 +14,7 @@ func RegisterAPIRoutes(r *gin.Engine) {
 		{
 			ac := new(v1C.AuthController)
 
-			authGroup.POST("/login", ac.Login)
+			authGroup.POST("/login", ac.LoginByPhone)
 			authGroup.POST("/register", ac.Register)
 			authGroup.POST("/refresh-token", middlewares.AuthJWT(), ac.RefreshToken)
 		}

@@ -14,7 +14,13 @@ const (
 
 // 自定义错误
 const (
-	CodeServerBusy ResCode = 1000 + iota
+	CodeServerBusy ResCode = 10000 + iota
+	CodeTokenExpired
+	CodeTokenExpiredMaxRefresh
+	CodeTokenMalformed
+	CodeTokenInvalid
+	CodeHeaderEmpty
+	CodeHeaderMalformed
 	CodeUserExist
 	CodeUserNotExist
 	CodeVerifyCodeErr
@@ -29,9 +35,16 @@ var codeMsgMap = map[ResCode]string{
 	CodeValidationErr:   "请求参数有误",
 	CodeTooManyRequests: "接口请求太频繁",
 
-	CodeUserExist:     "用户名已存在",
-	CodeUserNotExist:  "用户名不存在",
-	CodeVerifyCodeErr: "验证码错误",
+	CodeServerBusy:             "服务器繁忙",
+	CodeTokenExpired:           "令牌已过期",
+	CodeTokenExpiredMaxRefresh: "令牌已过最大刷新时间",
+	CodeTokenMalformed:         "请求令牌格式有误",
+	CodeTokenInvalid:           "请求令牌无效",
+	CodeHeaderEmpty:            "需要认证才能访问！",
+	CodeHeaderMalformed:        "请求头格式有误",
+	CodeUserExist:              "用户已存在",
+	CodeUserNotExist:           "用户不存在",
+	CodeVerifyCodeErr:          "验证码错误",
 }
 
 func (c ResCode) Msg() string {

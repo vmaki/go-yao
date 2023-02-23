@@ -10,7 +10,7 @@ type CommonSendSmsReq struct {
 	Template string `json:"template,omitempty" valid:"template"` // 短信场景码
 }
 
-func (s *CommonSendSmsReq) Generate(data interface{}) string {
+func (s *CommonSendSmsReq) Generate(data interface{}) error {
 	rules := govalidator.MapData{
 		"phone":    []string{"required", "digits:11"},
 		"template": []string{"required"},

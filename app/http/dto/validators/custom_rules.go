@@ -45,7 +45,7 @@ func init() {
 				return errors.New(message)
 			}
 
-			return fmt.Errorf("%v 已被占用", requestValue)
+			return fmt.Errorf("%v 已存在", requestValue)
 		}
 
 		return nil

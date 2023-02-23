@@ -12,7 +12,7 @@ type AuthRegisterReq struct {
 	Template string `json:"template,omitempty" valid:"template"` // 短信场景码
 }
 
-func (s *AuthRegisterReq) Generate(data interface{}) string {
+func (s *AuthRegisterReq) Generate(data interface{}) error {
 	rules := govalidator.MapData{
 		"phone":    []string{"required", "digits:11", "not_exists:users,phone"},
 		"code":     []string{"required", "digits:6"},
@@ -23,6 +23,7 @@ func (s *AuthRegisterReq) Generate(data interface{}) string {
 		"phone": []string{
 			"required:手机号为必填项",
 			"digits:手机号长度必须为 11 位的数字",
+			"not_exists:该手机号码已注册, 请勿重复注册",
 		},
 		"code": []string{
 			"required:验证码为必填项",
@@ -34,7 +35,7 @@ func (s *AuthRegisterReq) Generate(data interface{}) string {
 	}
 
 	err := request.GoValidate(data, rules, messages)
-	if err != "" {
+	if err != nil {
 		return err
 	}
 

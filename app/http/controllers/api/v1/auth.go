@@ -14,13 +14,13 @@ type AuthController struct {
 	api.BaseAPIController
 }
 
-func (ctr *AuthController) Login(ctx *gin.Context) {
+func (ctr *AuthController) LoginByPhone(ctx *gin.Context) {
 	req := dto.AuthLoginReq{}
-	if ok := request.Validate(ctx, &req); !ok {
+	if err := request.Validate(ctx, &req); err != nil {
+		response.Error(ctx, err)
 		return
 	}
 
-	// 使用手机号码登录
 	us := new(services.UserService)
 	user, err := us.LoginByPhone(req.Phone)
 	if err != nil {
@@ -28,7 +28,6 @@ func (ctr *AuthController) Login(ctx *gin.Context) {
 		return
 	}
 
-	// 生成 Token
 	token := jwt.NewJWT().IssueToken(jwt.UserInfo{
 		UserID: user.ID,
 	})
@@ -41,11 +40,11 @@ func (ctr *AuthController) Login(ctx *gin.Context) {
 
 func (ctr *AuthController) Register(ctx *gin.Context) {
 	req := dto.AuthRegisterReq{}
-	if ok := request.Validate(ctx, &req); !ok {
+	if err := request.Validate(ctx, &req); err != nil {
+		response.Error(ctx, err)
 		return
 	}
 
-	// 注册
 	us := new(services.UserService)
 	_, err := us.Register(req.Phone)
 	if err != nil {
@@ -59,7 +58,7 @@ func (ctr *AuthController) Register(ctx *gin.Context) {
 func (ctr *AuthController) RefreshToken(ctx *gin.Context) {
 	token, err := jwt.NewJWT().RefreshToken(ctx)
 	if err != nil {
-		response.Unauthorized(ctx, err.Error())
+		response.Unauthorized(ctx, err)
 		return
 	}
 

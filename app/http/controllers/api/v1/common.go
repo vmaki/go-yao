@@ -15,7 +15,8 @@ type CommonController struct {
 
 func (ctr *CommonController) SendSms(ctx *gin.Context) {
 	req := dto.CommonSendSmsReq{}
-	if ok := request.Validate(ctx, &req); !ok {
+	if err := request.Validate(ctx, &req); err != nil {
+		response.Error(ctx, err)
 		return
 	}
 

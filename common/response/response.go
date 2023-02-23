@@ -10,10 +10,10 @@ type RespData struct {
 	Data interface{} `json:"data,omitempty"`
 }
 
-func New(code ResCode) *RespData {
+func New(code ResCode, msg ...string) *RespData {
 	return &RespData{
 		Code: code,
-		Msg:  code.Msg(),
+		Msg:  defaultMessage(code.Msg(), msg...),
 	}
 }
 
