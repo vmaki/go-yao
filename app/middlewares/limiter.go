@@ -1,13 +1,11 @@
 package middlewares
 
 import (
+	"github.com/gin-gonic/gin"
+	"github.com/spf13/cast"
 	"go-yao/common/response"
 	"go-yao/pkg/limiter"
 	"go-yao/pkg/logger"
-	"net/http"
-
-	"github.com/gin-gonic/gin"
-	"github.com/spf13/cast"
 )
 
 // LimitIP 全局限流中间件，针对 IP 进行限流
@@ -49,7 +47,7 @@ func limitHandler(ctx *gin.Context, key string, limit string) bool {
 	rate, err := limiter.CheckRate(ctx, key, limit)
 	if err != nil {
 		logger.LogIf(err)
-		response.Error(ctx)
+		response.SysError(ctx)
 		return false
 	}
 
@@ -60,11 +58,7 @@ func limitHandler(ctx *gin.Context, key string, limit string) bool {
 
 	// 超额
 	if rate.Reached {
-		// 提示用户超额了
-		ctx.AbortWithStatusJSON(http.StatusTooManyRequests, gin.H{
-			"message": "接口请求太频繁",
-		})
-
+		response.TooManyRequests(ctx)
 		return false
 	}
 

@@ -11,7 +11,7 @@ func AuthJWT() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		claims, err := jwt.NewJWT().ParserToken(ctx)
 		if err != nil {
-			response.BadRequest(ctx, err.Error())
+			response.Unauthorized(ctx, err.Error())
 			return
 		}
 

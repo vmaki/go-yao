@@ -21,9 +21,9 @@ func (ctr *CommonController) SendSms(ctx *gin.Context) {
 
 	res := verifycode.NewVerifyCode().SendSMS(req.Template, req.Phone)
 	if !res {
-		response.BadRequest(ctx, "请求短信失败, 请稍后重试")
+		response.SysError(ctx)
 		return
 	}
 
-	response.Success(ctx)
+	response.Success(ctx, nil)
 }

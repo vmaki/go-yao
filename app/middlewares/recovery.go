@@ -48,7 +48,7 @@ func Recovery() gin.HandlerFunc {
 				logFields = append(logFields, zap.Stack("stacktrace"))
 				logger.Error("recovery from panic", logFields...)
 
-				response.Error(ctx)
+				response.SysError(ctx)
 			}
 		}()
 

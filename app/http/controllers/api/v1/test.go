@@ -12,7 +12,7 @@ type TestController struct {
 }
 
 func (ctr *TestController) Hello(ctx *gin.Context) {
-	response.Success(ctx)
+	response.Success(ctx, nil)
 }
 
 func (ctr *TestController) Err(ctx *gin.Context) {
@@ -22,7 +22,7 @@ func (ctr *TestController) Err(ctx *gin.Context) {
 func (ctr *TestController) Redis(ctx *gin.Context) {
 	redis.Client.Set("msg", "hello world", 64)
 
-	response.Success(ctx)
+	response.Success(ctx, nil)
 }
 
 func (ctr *TestController) Auth(ctx *gin.Context) {
@@ -30,5 +30,5 @@ func (ctr *TestController) Auth(ctx *gin.Context) {
 		"uid": ctr.CurrentUID(ctx),
 	}
 
-	response.Data(ctx, data)
+	response.Success(ctx, data)
 }

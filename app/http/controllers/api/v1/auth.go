@@ -24,7 +24,7 @@ func (ctr *AuthController) Login(ctx *gin.Context) {
 	us := new(services.UserService)
 	user, err := us.LoginByPhone(req.Phone)
 	if err != nil {
-		response.Error(ctx, err.Error())
+		response.Error(ctx, err)
 		return
 	}
 
@@ -36,7 +36,7 @@ func (ctr *AuthController) Login(ctx *gin.Context) {
 	data := &dto.AuthLoginResp{
 		Token: token,
 	}
-	response.Data(ctx, data)
+	response.Success(ctx, data)
 }
 
 func (ctr *AuthController) Register(ctx *gin.Context) {
@@ -49,22 +49,22 @@ func (ctr *AuthController) Register(ctx *gin.Context) {
 	us := new(services.UserService)
 	_, err := us.Register(req.Phone)
 	if err != nil {
-		response.BadRequest(ctx, err.Error())
+		response.Error(ctx, err)
 		return
 	}
 
-	response.Success(ctx)
+	response.Success(ctx, nil)
 }
 
 func (ctr *AuthController) RefreshToken(ctx *gin.Context) {
 	token, err := jwt.NewJWT().RefreshToken(ctx)
 	if err != nil {
-		response.BadRequest(ctx, err.Error())
+		response.Unauthorized(ctx, err.Error())
 		return
 	}
 
 	data := &dto.AuthRefreshTokenResp{
 		Token: token,
 	}
-	response.Data(ctx, data)
+	response.Success(ctx, data)
 }

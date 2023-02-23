@@ -1,9 +1,9 @@
 package services
 
 import (
-	"errors"
 	"fmt"
 	"go-yao/app/model/user"
+	"go-yao/common/response"
 )
 
 type UserService struct {
@@ -12,7 +12,7 @@ type UserService struct {
 // Register 注册
 func (s *UserService) Register(phone string) (*user.User, error) {
 	if isExist := user.IsPhoneExist(phone); isExist {
-		return nil, errors.New("用户已注册")
+		return nil, response.New(response.CodeUserExist)
 	}
 
 	data := &user.User{
@@ -25,7 +25,7 @@ func (s *UserService) Register(phone string) (*user.User, error) {
 		return data, nil
 	}
 
-	return nil, errors.New("创建用户失败")
+	return nil, response.New(response.CodeSysError)
 }
 
 // maskPhone 隐藏用户手机号码
@@ -41,7 +41,7 @@ func (s *UserService) maskPhone(phone string) string {
 func (s *UserService) LoginByPhone(phone string) (user.User, error) {
 	userModel := user.GetByPhone(phone)
 	if userModel.ID == 0 {
-		return user.User{}, errors.New("手机号未注册")
+		return user.User{}, response.New(response.CodeUserNotExist)
 	}
 
 	return userModel, nil
