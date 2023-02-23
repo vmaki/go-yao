@@ -8,6 +8,7 @@ import (
 
 func RegisterAPIRoutes(r *gin.Engine) {
 	v1 := r.Group("/api/v1")
+	v1.Use(middlewares.LimitIP("200-H"))
 	{
 		authGroup := v1.Group("/auth")
 		{
@@ -15,14 +16,14 @@ func RegisterAPIRoutes(r *gin.Engine) {
 
 			authGroup.POST("/login", ac.Login)
 			authGroup.POST("/register", ac.Register)
-			authGroup.POST("/refresh-token", ac.RefreshToken)
+			authGroup.POST("/refresh-token", middlewares.AuthJWT(), ac.RefreshToken)
 		}
 
 		commonGroup := v1.Group("/common")
 		{
 			cc := new(v1C.CommonController)
 
-			commonGroup.POST("/send-sms", cc.SendSms)
+			commonGroup.POST("/send-sms", middlewares.LimitPerRoute("20-H"), cc.SendSms)
 		}
 
 		testGroup := v1.Group("/test")

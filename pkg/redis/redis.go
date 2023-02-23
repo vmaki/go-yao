@@ -6,12 +6,12 @@ import (
 	"sync"
 	"time"
 
-	v8 "github.com/go-redis/redis/v8"
+	redisLib "github.com/redis/go-redis/v9"
 )
 
 type Server struct {
 	Context context.Context
-	Client  *v8.Client
+	Client  *redisLib.Client
 }
 
 var once sync.Once
@@ -26,7 +26,7 @@ func ConnectRedis(address string, username string, password string, db int) {
 func Connect(address string, username string, password string, db int) *Server {
 	rds := &Server{}
 	rds.Context = context.Background()
-	rds.Client = v8.NewClient(&v8.Options{
+	rds.Client = redisLib.NewClient(&redisLib.Options{
 		Addr:     address,
 		Username: username,
 		Password: password,
@@ -58,7 +58,7 @@ func (rds Server) Set(key string, value interface{}, expiration int64) bool {
 
 func (rds Server) Get(key string) string {
 	if result, err := rds.Client.Get(rds.Context, key).Result(); err != nil {
-		if err != v8.Nil {
+		if err != redisLib.Nil {
 			logger.ErrorString("Redis", "Get", err.Error())
 		}
 
@@ -71,7 +71,7 @@ func (rds Server) Get(key string) string {
 // Has 判断一个 key 是否存在，内部错误和 redis.Nil 都返回 false
 func (rds Server) Has(key string) bool {
 	if _, err := rds.Client.Get(rds.Context, key).Result(); err != nil {
-		if err != v8.Nil {
+		if err != redisLib.Nil {
 			logger.ErrorString("Redis", "Has", err.Error())
 		}
 
