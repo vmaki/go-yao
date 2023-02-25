@@ -12,6 +12,8 @@ func RegisterAPIRoutes(r *gin.Engine) {
 	{
 		api.RegisterV1AuthRoutes(v1)
 		api.RegisterV1CommonRoutes(v1)
+		api.RegisterV1UserRoutes(v1)
+
 		api.RegisterV1TestRoutes(v1)
 	}
 }

@@ -7,7 +7,7 @@ import (
 )
 
 func Validate(ctx *gin.Context, req IRequest) error {
-	if err := ctx.ShouldBindJSON(req); err != nil {
+	if err := ctx.ShouldBind(req); err != nil {
 		return response.New(response.CodeBadRequest)
 	}
 

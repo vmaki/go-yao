@@ -36,7 +36,7 @@ sms:
     signName: go-yao-name
 jwt:
   secret: zBqYyQrPNaIUsnRhsGtHLivjqiMjBVLS
-  expireTime: 120
+  expireTime: 3600
   maxRefreshTime: 86400
 other:
   smsExpireTime: 300
