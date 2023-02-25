@@ -1,8 +1,8 @@
 tmp
 .env
-gohub
 .DS_Store
 .history
+go-yao
 
 # Golang #
 ######################

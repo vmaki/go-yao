@@ -27,7 +27,7 @@ const (
 )
 
 var codeMsgMap = map[ResCode]string{
-	CodeSuccess:         "success",
+	CodeSuccess:         "请求成功",
 	CodeSysError:        "服务器内部错误，请稍后再试",
 	CodeBadRequest:      "请求解析错误，请确认请求格式是否正确。上传文件请使用 multipart 标头，参数请使用 JSON 格式",
 	CodeUnauthorized:    "身份验证失败，请稍后再试",

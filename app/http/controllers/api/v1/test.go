@@ -20,7 +20,7 @@ func (ctr *TestController) Err(ctx *gin.Context) {
 }
 
 func (ctr *TestController) Redis(ctx *gin.Context) {
-	redis.Client.Set("msg", "hello world", 64)
+	redis.Client.Set("msg", "hello redis", 64)
 
 	response.Success(ctx, nil)
 }
