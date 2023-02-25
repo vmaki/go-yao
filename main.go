@@ -1,60 +1,44 @@
 package main
 
 import (
-	"flag"
 	"fmt"
-	"github.com/fvbock/endless"
-	"github.com/gin-gonic/gin"
-	"github.com/spf13/cast"
+	"github.com/spf13/cobra"
 	"go-yao/boot"
-	"go-yao/common/global"
-	"log"
+	"go-yao/cmd"
+	"go-yao/pkg/console"
 	"os"
-	"os/exec"
-	"strconv"
-	"sync"
 )
 
-func init() {
-	flag.StringVar(&global.Env, "env", "", "加载 settings.yml，如 --env=dev 加载的是 settings.dev.yml")
-	flag.Parse()
-
-	boot.SetupConfig(global.Env)
-	boot.SetupLogger()
-	boot.SetupDB()
-	boot.SetupRedis()
-}
-
 func main() {
-	gin.SetMode(gin.ReleaseMode)
+	var rootCmd = &cobra.Command{
+		Use:   "GoYao",
+		Short: "A simple forum project",
+		Long:  `Default will run "serve" command, you can use "-h" flag to see all subcommands`,
 
-	r := gin.New()
-	boot.SetupRoute(r)
+		// rootCmd 的所有子命令都会执行以下代码
+		PersistentPreRun: func(command *cobra.Command, args []string) {
+			boot.SetupConfig(cmd.Env)
+			boot.SetupLogger()
+			boot.SetupDB()
+			boot.SetupRedis()
 
-	w := sync.WaitGroup{}
-	w.Add(1)
-
-	go func() {
-		err := endless.ListenAndServe(":"+cast.ToString(global.Conf.Application.Port), r)
-		if err != nil {
-			log.Println(err)
-		}
-
-		log.Println("Server on 5003 stopped")
-		w.Done()
-	}()
-
-	pid := os.Getpid()
-	fmt.Printf("进程 PID: %d \n", pid)
-
-	prc := exec.Command("ps", "-p", strconv.Itoa(pid), "-v")
-	out, err := prc.Output()
-	if err != nil {
-		panic("获取进场 id 失败, err:" + err.Error())
+			// 初始化缓存
+		},
 	}
 
-	fmt.Println(string(out))
+	// 注册子命令
+	rootCmd.AddCommand(
+		cmd.CmdServe,
+	)
 
-	w.Wait()
-	log.Println("All servers stopped. Exiting.")
+	// 配置默认运行 Web 服务
+	cmd.RegisterDefaultCmd(rootCmd, cmd.CmdServe)
+
+	// 注册全局参数，--env
+	cmd.RegisterGlobalFlags(rootCmd)
+
+	// 执行主命令
+	if err := rootCmd.Execute(); err != nil {
+		console.Exit(fmt.Sprintf("Failed to run app with %v: %s", os.Args, err.Error()))
+	}
 }

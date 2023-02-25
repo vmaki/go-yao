@@ -4,7 +4,7 @@ Name=$1
 
 startTask(){
   # shellcheck disable=SC2164
-  nohup ./"${Name}"  >/dev/null 2>&1 &
+  nohup ./"${Name}" --env=prod >/dev/null 2>&1 &
   echo "starting..."
 }
 

@@ -9,3 +9,11 @@ func InArray(slice []string, val string) int {
 
 	return -1
 }
+
+func FirstElement(args []string) string {
+	if len(args) > 0 {
+		return args[0]
+	}
+
+	return ""
+}
