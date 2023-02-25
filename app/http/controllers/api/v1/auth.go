@@ -10,18 +10,18 @@ import (
 	"go-yao/pkg/jwt"
 )
 
-type AuthController struct {
+type Auth struct {
 	api.BaseAPIController
 }
 
-func (ctr *AuthController) LoginByPhone(ctx *gin.Context) {
+func (ctr *Auth) LoginByPhone(ctx *gin.Context) {
 	req := dto.AuthLoginReq{}
 	if err := request.Validate(ctx, &req); err != nil {
 		response.Error(ctx, err)
 		return
 	}
 
-	us := new(services.UserService)
+	us := new(services.User)
 	user, err := us.LoginByPhone(req.Phone)
 	if err != nil {
 		response.Error(ctx, err)
@@ -38,14 +38,14 @@ func (ctr *AuthController) LoginByPhone(ctx *gin.Context) {
 	response.Success(ctx, data)
 }
 
-func (ctr *AuthController) Register(ctx *gin.Context) {
+func (ctr *Auth) Register(ctx *gin.Context) {
 	req := dto.AuthRegisterReq{}
 	if err := request.Validate(ctx, &req); err != nil {
 		response.Error(ctx, err)
 		return
 	}
 
-	us := new(services.UserService)
+	us := new(services.User)
 	_, err := us.Register(req.Phone)
 	if err != nil {
 		response.Error(ctx, err)
@@ -55,7 +55,7 @@ func (ctr *AuthController) Register(ctx *gin.Context) {
 	response.Success(ctx, nil)
 }
 
-func (ctr *AuthController) RefreshToken(ctx *gin.Context) {
+func (ctr *Auth) RefreshToken(ctx *gin.Context) {
 	token, err := jwt.NewJWT().RefreshToken(ctx)
 	if err != nil {
 		response.Unauthorized(ctx, err)

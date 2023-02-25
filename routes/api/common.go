@@ -9,7 +9,7 @@ import (
 func RegisterV1CommonRoutes(g *gin.RouterGroup) {
 	r := g.Group("/common")
 	{
-		cc := new(v1.CommonController)
+		cc := new(v1.Common)
 
 		r.POST("/send-sms", middlewares.LimitPerRoute("1-M"), cc.SendSms)
 	}

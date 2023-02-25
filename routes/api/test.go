@@ -9,7 +9,7 @@ import (
 func RegisterV1TestRoutes(g *gin.RouterGroup) {
 	r := g.Group("/test")
 	{
-		tc := new(v1.TestController)
+		tc := new(v1.Test)
 
 		r.GET("/", tc.Hello)
 		r.GET("/500", tc.Err)

@@ -9,7 +9,7 @@ import (
 func RegisterV1AuthRoutes(g *gin.RouterGroup) {
 	r := g.Group("/auth")
 	{
-		ac := new(v1.AuthController)
+		ac := new(v1.Auth)
 
 		r.POST("/login", ac.LoginByPhone)
 		r.POST("/register", ac.Register)

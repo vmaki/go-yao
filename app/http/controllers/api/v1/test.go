@@ -7,25 +7,25 @@ import (
 	"go-yao/pkg/redis"
 )
 
-type TestController struct {
+type Test struct {
 	api.BaseAPIController
 }
 
-func (ctr *TestController) Hello(ctx *gin.Context) {
+func (ctr *Test) Hello(ctx *gin.Context) {
 	response.Success(ctx, nil)
 }
 
-func (ctr *TestController) Err(ctx *gin.Context) {
+func (ctr *Test) Err(ctx *gin.Context) {
 	panic("这是 panic 测试")
 }
 
-func (ctr *TestController) Redis(ctx *gin.Context) {
+func (ctr *Test) Redis(ctx *gin.Context) {
 	redis.Client.Set("msg", "hello redis", 64)
 
 	response.Success(ctx, nil)
 }
 
-func (ctr *TestController) Auth(ctx *gin.Context) {
+func (ctr *Test) Auth(ctx *gin.Context) {
 	data := map[string]uint64{
 		"uid": ctr.CurrentUID(ctx),
 	}

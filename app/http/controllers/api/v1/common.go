@@ -9,11 +9,11 @@ import (
 	"go-yao/common/verifycode"
 )
 
-type CommonController struct {
+type Common struct {
 	api.BaseAPIController
 }
 
-func (ctr *CommonController) SendSms(ctx *gin.Context) {
+func (ctr *Common) SendSms(ctx *gin.Context) {
 	req := dto.CommonSendSmsReq{}
 	if err := request.Validate(ctx, &req); err != nil {
 		response.Error(ctx, err)

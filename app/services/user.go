@@ -6,11 +6,11 @@ import (
 	"go-yao/common/response"
 )
 
-type UserService struct {
+type User struct {
 }
 
 // Register 注册
-func (s *UserService) Register(phone string) (*user.User, error) {
+func (s *User) Register(phone string) (*user.User, error) {
 	if isExist := user.IsPhoneExist(phone); isExist {
 		return nil, response.New(response.CodeUserExist)
 	}
@@ -29,7 +29,7 @@ func (s *UserService) Register(phone string) (*user.User, error) {
 }
 
 // maskPhone 隐藏用户手机号码
-func (s *UserService) maskPhone(phone string) string {
+func (s *User) maskPhone(phone string) string {
 	if len(phone) < 10 {
 		return phone
 	}
@@ -38,7 +38,7 @@ func (s *UserService) maskPhone(phone string) string {
 }
 
 // LoginByPhone 使用手机号码登录
-func (s *UserService) LoginByPhone(phone string) (user.User, error) {
+func (s *User) LoginByPhone(phone string) (user.User, error) {
 	userModel := user.GetByPhone(phone)
 	if userModel.ID == 0 {
 		return user.User{}, response.New(response.CodeUserNotExist)
