@@ -4,6 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"go-yao/app/http/controllers/api"
 	"go-yao/common/response"
+	"go-yao/pkg/cache"
 	"go-yao/pkg/redis"
 )
 
@@ -31,4 +32,10 @@ func (ctr *Test) Auth(ctx *gin.Context) {
 	}
 
 	response.Success(ctx, data)
+}
+
+func (ctr *Test) Cache(ctx *gin.Context) {
+	cache.Set("msg", "hello cache", 64)
+
+	response.Success(ctx, nil)
 }

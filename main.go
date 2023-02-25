@@ -22,8 +22,7 @@ func main() {
 			boot.SetupLogger()
 			boot.SetupDB()
 			boot.SetupRedis()
-
-			// 初始化缓存
+			boot.SetupCache()
 		},
 	}
 
