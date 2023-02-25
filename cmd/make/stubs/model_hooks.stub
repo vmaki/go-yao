@@ -1,0 +1,11 @@
+package {{PackageName}}
+
+// func (m *{{StructName}}) BeforeSave(tx *gorm.DB) (err error) {}
+// func (m *{{StructName}}) BeforeCreate(tx *gorm.DB) (err error) {}
+// func (m *{{StructName}}) AfterCreate(tx *gorm.DB) (err error) {}
+// func (m *{{StructName}}) BeforeUpdate(tx *gorm.DB) (err error) {}
+// func (m *{{StructName}}) AfterUpdate(tx *gorm.DB) (err error) {}
+// func (m *{{StructName}}) AfterSave(tx *gorm.DB) (err error) {}
+// func (m *{{StructName}}) BeforeDelete(tx *gorm.DB) (err error) {}
+// func (m *{{StructName}}) AfterDelete(tx *gorm.DB) (err error) {}
+// func (m *{{StructName}}) AfterFind(tx *gorm.DB) (err error) {}

@@ -69,7 +69,7 @@ func customTimeEncoder(t time.Time, enc zapcore.PrimitiveArrayEncoder) {
 
 // getLogWriter 日志记录介质
 func getLogWriter(logType, filename string, maxSize, maxAge, maxBackup int, compress bool) zapcore.WriteSyncer {
-	// todo 按照日期记录日志文件. 这里有问题: 项目没有重启，第二天不生成新的日志文件
+	// TODO 按照日期记录日志文件. 这里有问题: 项目没有重启，第二天不生成新的日志文件
 	if logType == "daily" {
 		logName := fmt.Sprintf("%s.log", time.Now().Format("2006-01-02"))
 		filename = strings.ReplaceAll(filename, "logs.log", logName)

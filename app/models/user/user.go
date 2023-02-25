@@ -1,20 +1,20 @@
 package user
 
 import (
-	"go-yao/app/model"
+	"go-yao/app/models"
 	"go-yao/common/global"
 )
 
 // User 用户模型
 type User struct {
-	model.BaseModel
+	models.BaseModel
 
 	Name     string `json:"name,omitempty"`
 	Email    string `json:"-"`
 	Phone    string `json:"-"`
 	Password string `json:"-"`
 
-	model.CommonTimestampsField
+	models.CommonTimestampsField
 }
 
 // Create 创建用户

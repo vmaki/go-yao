@@ -1,0 +1,10 @@
+package {{PackageName}}
+
+import (
+    "{{AppName}}/common/global"
+)
+
+func Get(id uint64) ({{VariableName}} {{StructName}}) {
+    global.DB.Where("id = ?", id).First(&{{VariableName}})
+    return
+}

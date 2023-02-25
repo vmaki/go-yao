@@ -1,0 +1,17 @@
+package v1
+
+import (
+	"github.com/gin-gonic/gin"
+	"{{AppName}}/app/http/controllers/api"
+	"{{AppName}}/common/response"
+)
+
+type {{StructNamePlural}} struct {
+	api.BaseAPIController
+}
+
+func (ctr *{{StructNamePlural}}) Index(ctx *gin.Context) {
+    //TODO implement me
+	panic("implement me")
+	response.Success(ctx, nil)
+}

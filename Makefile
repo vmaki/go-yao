@@ -15,9 +15,6 @@ stop:
 restart:
 	sh app.sh ${BINARY} restart
 
-clean:
-	@if [ -f ${BINARY} ] ; then rm ${BINARY} ; fi
-
 help:
 	@echo "make local-build - 本地环境编译 Go 代码, 生成二进制文件"
 	@echo "make build - 编译 Go 代码, 生成二进制文件"

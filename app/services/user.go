@@ -2,7 +2,7 @@ package services
 
 import (
 	"fmt"
-	"go-yao/app/model/user"
+	"go-yao/app/models/user"
 	"go-yao/common/response"
 )
 

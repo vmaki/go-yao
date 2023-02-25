@@ -8,11 +8,14 @@ require (
 	github.com/alibabacloud-go/tea v1.1.20
 	github.com/fsnotify/fsnotify v1.6.0
 	github.com/fvbock/endless v0.0.0-20170109170031-447134032cb6
+	github.com/gertd/go-pluralize v0.2.1
 	github.com/gin-gonic/gin v1.8.2
 	github.com/golang-jwt/jwt/v4 v4.5.0
+	github.com/iancoleman/strcase v0.2.0
 	github.com/mgutz/ansi v0.0.0-20200706080929-d51e80ef957d
 	github.com/redis/go-redis/v9 v9.0.1
 	github.com/spf13/cast v1.5.0
+	github.com/spf13/cobra v1.6.1
 	github.com/spf13/viper v1.15.0
 	github.com/thedevsaddam/govalidator v1.9.10
 	github.com/ulule/limiter/v3 v3.11.0
@@ -54,7 +57,6 @@ require (
 	github.com/pelletier/go-toml/v2 v2.0.6 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/spf13/afero v1.9.3 // indirect
-	github.com/spf13/cobra v1.6.1 // indirect
 	github.com/spf13/jwalterweatherman v1.1.0 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
 	github.com/subosito/gotenv v1.4.2 // indirect

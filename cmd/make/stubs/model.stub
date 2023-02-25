@@ -1,0 +1,28 @@
+package {{PackageName}}
+
+import (
+	"{{AppName}}/app/models"
+	"{{AppName}}/common/global"
+)
+
+type {{StructName}} struct {
+    models.BaseModel
+
+    // Put fields in here
+
+    models.CommonTimestampsField
+}
+
+func (m *{{StructName}}) Create() {
+    global.DB.Create(&m)
+}
+
+func (m *{{StructName}}) Save() (rowsAffected int64) {
+    result := global.DB.Save(&m)
+    return result.RowsAffected
+}
+
+func (m *{{StructName}}) Delete() (rowsAffected int64) {
+    result := global.DB.Delete(&m)
+    return result.RowsAffected
+}
