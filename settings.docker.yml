@@ -1,0 +1,43 @@
+application:
+  name: go-yao-docker
+  mode: dev
+  port: 7003
+  debug: true
+  timezone: Asia/Shanghai
+log:
+  level: debug
+  type: single
+  filename: storage/logs/logs.log
+  maxSize: 64
+  maxAge: 7
+  maxBackup: 5
+  compress: false
+database:
+  driver: mysql
+  host: go-mysql
+  port: 3306
+  database: go-yao
+  username: root
+  password: root
+  charset: utf8mb4
+  maxOpenConnections: 100
+  maxIdleConnections: 25
+  maxLifeSeconds: 300
+redis:
+  host: go-redis
+  port: 6379
+  username:
+  password:
+  database: 0
+sms:
+  aliyun:
+    accessKeyId: 123456
+    accessKeySecret: 654321
+    signName: go-yao-name
+jwt:
+  secret: zBqYyQrPNaIUsnRhsGtHLivjqiMjBVLS
+  expireTime: 120
+  maxRefreshTime: 86400
+other:
+  smsExpireTime: 300
+
