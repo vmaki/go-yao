@@ -9,6 +9,7 @@ import (
 var (
 	once   sync.Once
 	Client *asynq.Client
+	Srv    *asynq.Server
 )
 
 func ConnectAsynq(address string, username string, password string, db int) {
@@ -16,6 +17,17 @@ func ConnectAsynq(address string, username string, password string, db int) {
 
 	once.Do(func() {
 		Client = asynq.NewClient(r)
+		Srv = asynq.NewServer(
+			asynq.RedisClientOpt{Addr: address},
+			asynq.Config{
+				Concurrency: 10,
+				Queues: map[string]int{
+					"critical": 6,
+					"default":  3,
+					"low":      1,
+				},
+			},
+		)
 	})
 }
 
