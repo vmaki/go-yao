@@ -16,5 +16,6 @@ func RegisterV1TestRoutes(g *gin.RouterGroup) {
 		r.GET("/redis", tc.Redis)
 		r.GET("/is-auth", middlewares.AuthJWT(), tc.Auth)
 		r.GET("/cache", tc.Cache)
+		r.GET("/job", tc.Job)
 	}
 }

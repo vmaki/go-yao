@@ -23,6 +23,7 @@ func main() {
 			boot.SetupDB()
 			boot.SetupRedis()
 			boot.SetupCache()
+			boot.SetupAsynq()
 		},
 	}
 
